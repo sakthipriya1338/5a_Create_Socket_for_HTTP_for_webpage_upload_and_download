@@ -16,6 +16,62 @@ To write a PYTHON program for socket for HTTP for web page upload and download
 6.Stop the program
 <BR>
 ## Program 
+##PYTHON
+```
+import socket
+
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server_socket.bind(("127.0.0.1", 8080))
+server_socket.listen(1)
+
+print("Server running at http://127.0.0.1:8080")
+
+conn, addr = server_socket.accept()
+print("Connected by:", addr)
+request = conn.recv(1024)
+print(request.decode())
+
+# Open HTML file
+with open("index.html", "rb") as f:
+    html_content = f.read()
+
+# Send HTTP headers first
+conn.send(b"HTTP/1.1 200 OK\r\n")
+conn.send(b"Content-Type: text/html\r\n")
+conn.send(b"\r\n")
+
+# Send HTML content
+conn.send(html_content)
+
+conn.close()
+server_socket.close()
+```
+##HTML
+```<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple HTML Page</title>
+</head>
+<body>
+
+<h1>Welcome to HTML</h1>
+<p>This is a simple HTML file.</p>
+
+<button onclick="showMessage()">Click Me</button>
+
+<script>
+function showMessage() {
+    alert("Hello World!");
+}
+</script>
+
+</body>
+</html>
+```
+
 ## OUTPUT
+<img width="1870" height="1003" alt="image" src="https://github.com/user-attachments/assets/38f21c58-b6b6-4885-af95-962ec117e6da" />
+
 ## Result
 Thus the socket for HTTP for web page upload and download created and Executed
